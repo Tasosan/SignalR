@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
-using SignalR;
+using SignalRHubs;
 
 namespace LearningSignalR
 {
     public class LearningHub : Hub<ILearningHubClient>
     {
-        [Authorize]
+       
         public async Task BroadcastMessage(string message)
         {
             await Clients.All.ReceiveMessage(GetMessageWithName(message));
@@ -34,7 +34,7 @@ namespace LearningSignalR
             await Clients.Group(groupName).ReceiveMessage(GetMessageWithName(message));
         }
 
-        [Authorize(Roles = "Admin")]
+       
         public async Task AddUserToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
@@ -42,7 +42,7 @@ namespace LearningSignalR
             await Clients.Others.ReceiveMessage($"User {Context.ConnectionId} added to {groupName} group");
         }
 
-        [Authorize(Roles = "Admin")]
+       
         public async Task RemoveUserFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);

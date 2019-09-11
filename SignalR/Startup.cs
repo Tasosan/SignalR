@@ -78,7 +78,7 @@ namespace SignalR
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSignalR();
+            services.AddSignalR().AddRedis("localhost:6379");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
